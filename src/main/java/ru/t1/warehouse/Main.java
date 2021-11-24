@@ -3,7 +3,7 @@ package ru.t1.warehouse;
 import ru.t1.warehouse.models.Warehouse;
 import ru.t1.warehouse.runnable.Consumer;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
 
 public class Main {
 
@@ -11,11 +11,10 @@ public class Main {
         if (args.length > 0) {
             if (isPositiveInteger(args[0])) {
                 int numberConsumer = Integer.parseInt(args[0]);
-                CountDownLatch countDownLatch = new CountDownLatch(numberConsumer);
+                CyclicBarrier cyclicBarrier = new CyclicBarrier(numberConsumer);
                 Warehouse warehouse = new Warehouse();
-                int maxProduct = 1000/numberConsumer;
                 for (int i = 0; i < numberConsumer; i++) {
-                    new Consumer(warehouse, countDownLatch, maxProduct);
+                    new Consumer(warehouse, cyclicBarrier);
                 }
             }
         } else {

@@ -2,7 +2,7 @@ package ru.t1.warehouse.models;
 
 public class Warehouse {
 
-    private volatile int product = 1000;
+    private int product = 1000;
 
     public int getProduct() {
         return product;
@@ -13,11 +13,9 @@ public class Warehouse {
     }
 
     public synchronized int takeProduct(int count) {
-        if (product <= 0) {
-            return 0;
-        }
         if (count > product) {
             count = product;
+            product = 0;
             return count;
         }
         product = product - count;
